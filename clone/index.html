@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=width, initial-scale=1, maximum-scale=1" />
+    <meta http-equiv="Pragma" content="no-cache">
+    <title>跳转中</title>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/Common.js?20230125"></script>
+    <script type="text/javascript">
+        function init() {
+            var BrowserPretty = common.funCheckBrowser();
+            if (BrowserPretty == "wx") {
+                //document.write("微信浏览器");
+                var Param = common.getQueryString("param");
+                window.location.replace(common.redirect_uri + "?param=" + Param + "&ycopenid=" + localStorage.YCWeiXinOpenId);
+            }else if (BrowserPretty == "xl") {
+                //document.writeln("闲聊浏览器");
+                var Param = common.getQueryString("param");
+                window.location.replace(common.redirect_uri_xl + "?param=" + Param);
+            }else if (BrowserPretty == "mw") {
+                //document.writeln("默往浏览器");
+                if (common.mw_mode == "1"){
+                    //服务器模式
+                    var Param = common.getQueryString("param");
+                    window.location.replace(common.redirect_uri_mw + "?param=" + Param);
+                }else{
+                    //SDK模式
+                    var Param = common.getQueryString("param");
+                    //if (localStorage.YCMoWangUserJson == undefined) {
+                        common.funLoadMWConfig(Param);
+                    //} else {
+                    //    window.location.replace("index1704941188428.html?param=" + Param);
+                    //}
+                }
+            }else{
+                document.write("暂不支持的浏览器");
+            }
+        }
+    </script>
+</head>
+<body onload="init()">
+    <!--<a href="javascript:void(0);" onclick="init()">开始跳转</a>-->
+</body>
+</html>
